@@ -1,24 +1,43 @@
 body {
   margin: 0;
+  padding: 0;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background-color: #f0f0f0;
+  font-family: -apple-system, "Hiragino Kaku Gothic ProN", "メイリオ",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .game-container {
-  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 canvas {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 2/3;
   border: 2px solid #333;
   background-color: #fff;
 }
 
 .game-info {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
   margin-top: 10px;
-  font-size: 20px;
 }
 
 .start-button {
@@ -66,6 +85,22 @@ canvas {
     padding: 20px 40px;
     font-size: 24px;
     margin: 20px auto;
+  }
+}
+
+/* レスポンシブ対応 */
+@media (max-height: 700px) {
+  .game-container {
+    padding: 5px;
+  }
+
+  canvas {
+    aspect-ratio: 2/2.5;
+  }
+
+  .game-info {
+    margin-top: 5px;
+    padding: 5px;
   }
 }
 
