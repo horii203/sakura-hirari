@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>さくらひらり</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <canvas id="gameCanvas"></canvas>
+      <div class="game-info">
+        <div id="score">スコア: 0</div>
+        <div id="timer">残り時間: 30秒</div>
+      </div>
+
+      <!-- スタート画面のポップアップ -->
+      <div id="startPopup" class="popup">
+        <div class="popup-content">
+          <h2>さくらひらり</h2>
+          <p>花びらをキャッチしてスコアを稼ごう！</p>
+          <p>毛虫は避けよう！</p>
+          <button id="startButton" class="game-button">スタート</button>
+        </div>
+      </div>
+
+      <!-- ゲーム終了時のポップアップ -->
+      <div id="endPopup" class="popup" style="display: none">
+        <div class="popup-content">
+          <h2>ゲーム終了！</h2>
+          <p id="finalScore">あなたのスコア: 0点</p>
+          <p id="maxScore">最高可能スコア: 20点</p>
+          <button id="retryButton" class="game-button">リトライ</button>
+        </div>
+      </div>
+    </div>
+    <script src="game.js"></script>
+  </body>
+</html>

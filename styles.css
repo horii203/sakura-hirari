@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.game-container {
+  text-align: center;
+}
+
+canvas {
+  border: 2px solid #333;
+  background-color: #fff;
+}
+
+.game-info {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.start-button {
+  padding: 15px 30px;
+  font-size: 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.start-button:hover {
+  background-color: #45a049;
+}
+
+/* レスポンシブデザインの追加 */
+@media (max-width: 768px) {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .game-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  canvas {
+    width: 100%;
+    height: 80vh;
+    border: none;
+  }
+
+  .game-info {
+    font-size: 24px;
+    padding: 10px;
+  }
+
+  .start-button {
+    padding: 20px 40px;
+    font-size: 24px;
+    margin: 20px auto;
+  }
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: rgba(255, 245, 245, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 300px;
+}
+
+.popup h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.popup p {
+  color: #333;
+  margin: 10px 0;
+}
+
+.game-button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.game-button:hover {
+  background: #45a049;
+}
