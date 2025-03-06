@@ -95,7 +95,7 @@ canvas {
   }
 
   canvas {
-    aspect-ratio: 2/2.5;
+    height: 70vh;
   }
 
   .game-info {
