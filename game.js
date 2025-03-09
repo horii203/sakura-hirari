@@ -10,6 +10,7 @@ let score = 0;
 let timeLeft = 30;
 let gameObjects = [];
 let isGameRunning = false;
+let isEndingProcess = false;
 
 // かごの設定を修正
 const basket = {
@@ -101,6 +102,7 @@ retryButton.addEventListener("click", () => {
 // ゲームを開始する関数を修正
 function startGame() {
   isGameRunning = true;
+  isEndingProcess = false;
   score = 0;
   gameObjects = [];
   lastObjectTime = 0;
@@ -118,7 +120,9 @@ function endGame() {
   isGameRunning = false;
   const maxPossibleScore = totalSakuraToGenerate;
 
-  finalScore.textContent = `あなたのスコア: ${score}点`;
+  // 画面上部に表示されているスコアをそのまま使用
+  const currentScore = document.getElementById("score").textContent;
+  finalScore.textContent = currentScore.replace("スコア", "あなたのスコア");
   maxScore.textContent = `最高可能スコア: ${maxPossibleScore}点`;
   endPopup.style.display = "flex";
 }
@@ -223,7 +227,8 @@ function gameLoop(timestamp) {
   ctx.fill();
 
   // オブジェクトの更新と描画
-  gameObjects.forEach((obj, index) => {
+  for (let i = gameObjects.length - 1; i >= 0; i--) {
+    const obj = gameObjects[i];
     // オブジェクトの移動
     obj.y += obj.speed;
 
@@ -351,27 +356,33 @@ function gameLoop(timestamp) {
       obj.x + obj.width > basket.x
     ) {
       score += obj.isSakura ? 1 : -1;
-      gameObjects.splice(index, 1);
+      gameObjects.splice(i, 1);
+      continue;
     }
 
     // 画面外に出たオブジェクトの削除
     if (obj.y > canvas.height) {
-      gameObjects.splice(index, 1);
+      gameObjects.splice(i, 1);
     }
-  });
+  }
 
-  // 全てのオブジェクトが生成済みで、画面上にオブジェクトが残っていない場合、ゲーム終了
+  // ゲーム終了判定を一箇所にまとめる
   if (
+    !isEndingProcess &&
     sakuraGenerated >= totalSakuraToGenerate &&
     bugsGenerated >= totalBugsToGenerate &&
     gameObjects.length === 0
   ) {
-    endGame();
-    return;
+    isEndingProcess = true;
+    setTimeout(() => {
+      endGame();
+    }, 500);
   }
 
-  // スコアの表示更新
+  // スコアと時間の表示更新
   document.getElementById("score").textContent = `スコア: ${score}`;
+  // タイマーの表示を削除
+  // document.getElementById("timer").textContent = `残り時間: ${timeLeft}秒`;
 
   // ランダムな間隔でオブジェクトを生成
   if (timestamp - lastObjectTime > nextObjectInterval) {
