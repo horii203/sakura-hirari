@@ -11,10 +11,10 @@ let timeLeft = 30;
 let gameObjects = [];
 let isGameRunning = false;
 
-// かごの設定
+// かごの設定を修正
 const basket = {
   x: canvas.width / 2,
-  y: canvas.height - 50,
+  y: canvas.height - canvas.height * 0.15, // 初期位置を画面下から15%上に
   width: 50,
   height: 30,
 };
@@ -86,26 +86,16 @@ retryButton.addEventListener("click", () => {
   startGame();
 });
 
-// ゲームを開始する関数
+// ゲームを開始する関数を修正
 function startGame() {
   isGameRunning = true;
   score = 0;
-  timeLeft = 30;
   gameObjects = [];
   lastObjectTime = 0;
   sakuraGenerated = 0;
   bugsGenerated = 0;
   nextObjectInterval =
     Math.random() * (maxInterval - minInterval) + minInterval;
-
-  // タイマーの開始
-  const timer = setInterval(() => {
-    timeLeft--;
-    if (timeLeft <= 0) {
-      endGame();
-      clearInterval(timer);
-    }
-  }, 1000);
 
   // メインゲームループ
   requestAnimationFrame(gameLoop);
@@ -358,9 +348,18 @@ function gameLoop(timestamp) {
     }
   });
 
-  // スコアと時間の表示更新
+  // 全てのオブジェクトが生成済みで、画面上にオブジェクトが残っていない場合、ゲーム終了
+  if (
+    sakuraGenerated >= totalSakuraToGenerate &&
+    bugsGenerated >= totalBugsToGenerate &&
+    gameObjects.length === 0
+  ) {
+    endGame();
+    return;
+  }
+
+  // スコアの表示更新
   document.getElementById("score").textContent = `スコア: ${score}`;
-  document.getElementById("timer").textContent = `残り時間: ${timeLeft}秒`;
 
   // ランダムな間隔でオブジェクトを生成
   if (timestamp - lastObjectTime > nextObjectInterval) {
@@ -403,14 +402,14 @@ function resizeCanvas() {
   const viewportHeight = window.innerHeight;
 
   // キャンバスのサイズを設定
-  // 画面の90%を使用（余白を残す）
-  canvas.width = Math.min(viewportWidth * 0.9, 400); // 最大幅を400pxに制限
-  canvas.height = Math.min(viewportHeight * 0.8, 600); // 最大高さを600pxに制限
+  canvas.width = Math.min(viewportWidth * 0.9, 400);
+  canvas.height = Math.min(viewportHeight * 0.8, 600);
 
   // かごのサイズと位置を画面サイズに応じて調整
-  basket.width = canvas.width * 0.15; // キャンバス幅の15%
-  basket.height = canvas.height * 0.05; // キャンバス高さの5%
-  basket.y = canvas.height - basket.height - 10; // 底から10px上
+  basket.width = canvas.width * 0.15;
+  basket.height = canvas.height * 0.05;
+  // かごの位置を下に移動（底から15%上）
+  basket.y = canvas.height - canvas.height * 0.15;
 }
 
 // ウィンドウサイズが変更されたときにキャンバスをリサイズ
