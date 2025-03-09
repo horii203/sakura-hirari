@@ -391,6 +391,8 @@ function gameLoop(timestamp) {
 
     // 衝突判定
     if (
+      // かごの上端より上にいる場合のみ衝突判定を行う
+      obj.y <= basket.y &&
       obj.y + obj.height > basket.y &&
       obj.x < basket.x + basket.width &&
       obj.x + obj.width > basket.x
