@@ -66,6 +66,18 @@ document.body.addEventListener(
   { passive: false }
 );
 
+// マウス操作の追加
+canvas.addEventListener("mousemove", (e) => {
+  if (isGameRunning) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    basket.x = mouseX - basket.width / 2;
+
+    // かごが画面外に出ないように制限
+    basket.x = Math.max(0, Math.min(canvas.width - basket.width, basket.x));
+  }
+});
+
 // DOM要素の取得
 const startPopup = document.getElementById("startPopup");
 const endPopup = document.getElementById("endPopup");
