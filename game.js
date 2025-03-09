@@ -30,6 +30,45 @@ let sakuraGenerated = 0;
 let bugsGenerated = 0;
 let nextObjectInterval = 1000;
 
+// エフェクト用の配列を追加
+let effects = [];
+
+// スコアエフェクトのクラスを作成
+class ScoreEffect {
+  constructor(x, y, score) {
+    this.x = x;
+    this.y = y;
+    this.score = score;
+    this.life = 1.0; // 寿命（1.0から0.0に減少）
+    this.color = score > 0 ? "#32CD32" : "#F44336"; // プラスは明るい緑（ライムグリーン）、マイナスは赤
+  }
+
+  // エフェクトの描画
+  draw(ctx) {
+    ctx.save();
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.life;
+    ctx.font = "bold 24px Arial"; // フォントサイズを大きく
+    ctx.textAlign = "center";
+
+    // 文字の縁取り
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 3;
+    ctx.strokeText(this.score > 0 ? "+1" : "-1", this.x, this.y);
+
+    // 文字本体
+    ctx.fillText(this.score > 0 ? "+1" : "-1", this.x, this.y);
+
+    ctx.restore();
+  }
+
+  // エフェクトの更新
+  update() {
+    this.y -= 1.5; // 上に移動する速度を少し速く
+    this.life -= 0.02; // 寿命を減らす
+    return this.life > 0;
+  }
+}
 // タッチデバイス用の操作を改善
 canvas.addEventListener(
   "touchstart",
@@ -105,6 +144,7 @@ function startGame() {
   isEndingProcess = false;
   score = 0;
   gameObjects = [];
+  effects = []; // エフェクトをリセット
   lastObjectTime = 0;
   sakuraGenerated = 0;
   bugsGenerated = 0;
@@ -356,6 +396,10 @@ function gameLoop(timestamp) {
       obj.x + obj.width > basket.x
     ) {
       score += obj.isSakura ? 1 : -1;
+      // エフェクトを追加
+      effects.push(
+        new ScoreEffect(obj.x + obj.width / 2, basket.y, obj.isSakura ? 1 : -1)
+      );
       gameObjects.splice(i, 1);
       continue;
     }
@@ -414,6 +458,15 @@ function gameLoop(timestamp) {
         Math.random() * (maxInterval - minInterval) + minInterval;
     }
   }
+
+  // エフェクトの更新と描画
+  effects = effects.filter((effect) => {
+    const isAlive = effect.update();
+    if (isAlive) {
+      effect.draw(ctx);
+    }
+    return isAlive;
+  });
 
   requestAnimationFrame(gameLoop);
 }
