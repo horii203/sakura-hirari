@@ -163,7 +163,7 @@ function endGame() {
   // 画面上部に表示されているスコアをそのまま使用
   const currentScore = document.getElementById("score").textContent;
   finalScore.textContent = currentScore.replace("スコア", "あなたのスコア");
-  maxScore.textContent = `最高可能スコア: ${maxPossibleScore}点`;
+  maxScore.textContent = `最高可能スコア: ${maxPossibleScore}`;
   endPopup.style.display = "flex";
 }
 
