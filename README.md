@@ -1,4 +1,8 @@
-AI ツール「Cursor」にコードをすべて書いてもらい作成したゲームです。説明は作った本人（Cursor）に書いてもらいましょう ↓↓↓
+AI ツール「Cursor」にコードをすべて書いてもらい作成したゲームです。
+LTのネタのために作成しました。
+LT資料：https://www.canva.com/design/DAGh8YQScgs/_ht8ZEo_6WxraGHxAXaTsQ/edit?utm_content=DAGh8YQScgs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+説明は作った本人（Cursor）に書いてもらいましょう ↓↓↓
 
 # さくらひらり 🌸
 
